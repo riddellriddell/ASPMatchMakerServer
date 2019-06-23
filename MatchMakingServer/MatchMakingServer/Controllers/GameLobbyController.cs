@@ -82,11 +82,11 @@ namespace MatchMakingServer.Controllers
                 return NotFound();
             }
                        
-            var query = from request in _context.ComsData
+            var query = from request in _context.ConnectionRequestData
                         where request.GameLobbyId == gameLobby.Id
                         select request;
 
-            List<ComsChannel> connections = await query.ToListAsync();
+            List<ConnectionRequest> connections = await query.ToListAsync();
 
             return Ok(connections);
         }
@@ -159,7 +159,7 @@ namespace MatchMakingServer.Controllers
             _context.GameLobbyData.Remove(gameLobby);
 
             //remove all relaeted connections
-            _context.ComsData.RemoveRange(_context.ComsData.Where(x =>x.GameLobbyId == id));
+            _context.ConnectionRequestData.RemoveRange(_context.ConnectionRequestData.Where(x =>x.GameLobbyId == id));
 
             await _context.SaveChangesAsync();
 
