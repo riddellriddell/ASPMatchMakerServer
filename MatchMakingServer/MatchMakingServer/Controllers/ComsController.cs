@@ -30,6 +30,52 @@ namespace MatchMakingServer.Controllers
     {
         private const string SignalSepparationCharacter = "|";
 
+        public static ComsChannel CreateConnection(CreateComsChannelSignal newConnection)
+        {
+            ComsChannel connectionRequestEntry = new ComsChannel();
+            connectionRequestEntry.GameLobbyId = newConnection.GameLobbyId;
+            connectionRequestEntry.OwnerID = newConnection.OwnerID;
+            connectionRequestEntry.OwnerOutData = newConnection.InitalData;
+            connectionRequestEntry.TimeOfLastOutAction = DateTime.UtcNow;
+
+            return connectionRequestEntry;
+        }
+
+        public static void AddSignal(ComsChannel channel, UpdateChannel signal)
+        {
+            AddSignal(channel, signal.Owner, signal.Data);
+        }
+
+        public static void AddSignal(ComsChannel channel, bool isOwner, string data)
+        {
+            if (isOwner)
+            {
+                channel.OwnerOutData = channel.OwnerOutData + SignalSepparationCharacter + data;
+            }
+            else
+            {
+                channel.OwnerInData = channel.OwnerInData + SignalSepparationCharacter + data;
+            }
+        }
+
+        public static string ReadSignal(ComsChannel channel, bool isOwner)
+        {
+            string output = string.Empty;
+
+            if (isOwner == true)
+            {
+                output = channel.OwnerInData;
+                channel.OwnerInData = string.Empty;
+            }
+            else
+            {
+                output = channel.OwnerOutData;
+                channel.OwnerOutData = string.Empty;
+            }
+
+            return output;
+        }
+
         private readonly GameLobbyContext _context;
 
         public ComsController(GameLobbyContext context)
@@ -87,7 +133,7 @@ namespace MatchMakingServer.Controllers
             }
             else
             {
-                signalData = ReadSignal(connection, updateData);
+                signalData = ReadSignal(connection, updateData.Owner);
             }
           
 
@@ -162,50 +208,6 @@ namespace MatchMakingServer.Controllers
             return _context.ComsData.Any(e => e.Id == id);
         }
 
-        private ComsChannel CreateConnection(CreateComsChannelSignal newConnection)
-        {
-            ComsChannel connectionRequestEntry = new ComsChannel();
-            connectionRequestEntry.GameLobbyId = newConnection.GameLobbyId;
-            connectionRequestEntry.OwnerID = newConnection.OwnerID;
-            connectionRequestEntry.OwnerOutData = newConnection.InitalData;
-            connectionRequestEntry.TimeOfLastOutAction = DateTime.UtcNow;
 
-            return connectionRequestEntry;
-        }
-
-        private void AddSignal(ComsChannel channel, UpdateChannel signal)
-        {
-            AddSignal(channel, signal.Owner, signal.Data);
-        }
-
-        private void AddSignal(ComsChannel channel , bool isOwner, string data)
-        {
-            if(isOwner)
-            {
-                channel.OwnerOutData = channel.OwnerOutData + SignalSepparationCharacter + data;
-            }
-            else
-            {
-                channel.OwnerInData = channel.OwnerInData + SignalSepparationCharacter + data;
-            }
-        }
-
-        private string ReadSignal(ComsChannel channel,UpdateChannel signal)
-        {
-            string output = string.Empty;
-
-            if(signal.Owner == true)
-            {
-                output = channel.OwnerInData;
-                channel.OwnerInData = string.Empty;
-            }
-            else
-            {
-                output = channel.OwnerOutData;
-                channel.OwnerOutData = string.Empty;
-            }
-           
-            return output;
-        }
     }
 }

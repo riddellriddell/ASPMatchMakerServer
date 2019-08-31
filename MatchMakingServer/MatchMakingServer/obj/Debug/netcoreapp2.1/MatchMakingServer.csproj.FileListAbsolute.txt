@@ -12,3 +12,17 @@ C:\Users\Jack The Ripper\Documents\GameDev\Rewind Networking\ASPMatchMakingServe
 C:\Users\Jack The Ripper\Documents\GameDev\Rewind Networking\ASPMatchMakingServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.dll
 C:\Users\Jack The Ripper\Documents\GameDev\Rewind Networking\ASPMatchMakingServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.pdb
 C:\Users\Jack The Ripper\Documents\GameDev\Rewind Networking\ASPMatchMakingServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.csprojAssemblyReference.cache
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\bin\Debug\netcoreapp2.1\MatchMakingServer.deps.json
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\bin\Debug\netcoreapp2.1\MatchMakingServer.runtimeconfig.json
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\bin\Debug\netcoreapp2.1\MatchMakingServer.runtimeconfig.dev.json
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\bin\Debug\netcoreapp2.1\MatchMakingServer.dll
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\bin\Debug\netcoreapp2.1\MatchMakingServer.pdb
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.csprojAssemblyReference.cache
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.csproj.CoreCompileInputs.cache
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.RazorAssemblyInfo.cache
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.RazorAssemblyInfo.cs
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.AssemblyInfoInputs.cache
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.AssemblyInfo.cs
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.RazorTargetAssemblyInfo.cache
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.dll
+D:\Game Dev\RollBackNetworking\ASPMatchMakerServer\MatchMakingServer\MatchMakingServer\obj\Debug\netcoreapp2.1\MatchMakingServer.pdb

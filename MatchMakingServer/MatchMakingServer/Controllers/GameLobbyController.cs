@@ -18,6 +18,12 @@ namespace MatchMakingServer.Controllers
             public int Id { get; set; }
         }
 
+        public class GetLobyComsReply
+        {
+            //list of all the communications being sent to the owner of the lobby 
+            public List<Tuple<int, string>> Coms { get; set; } = new List<Tuple<int, string>>();
+        }
+
 
         public class PostConnectionRequestReponse
         {
@@ -88,7 +94,14 @@ namespace MatchMakingServer.Controllers
 
             List<ComsChannel> connections = await query.ToListAsync();
 
-            return Ok(connections);
+            GetLobyComsReply lobbyComs = new GetLobyComsReply();
+
+            for (int i = 0; i < connections.Count; i++)
+            {
+                lobbyComs.Coms.Add( new Tuple<int,string>( connections[i].Id,ComsController.ReadSignal(connections[i],false)));
+            }
+
+            return Ok(lobbyComs);
         }
 
         // PUT: api/GameLobby/5

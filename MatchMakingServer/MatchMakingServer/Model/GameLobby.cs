@@ -11,6 +11,5 @@ namespace MatchMakingServer.Model
         public int Id { get; set; }
 
         public DateTime TimeOfLastHostActivity { get; set; }
-
     }
 }
