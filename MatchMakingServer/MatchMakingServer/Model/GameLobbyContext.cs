@@ -10,7 +10,9 @@ namespace MatchMakingServer.Model
     {
         public DbSet<GameLobby> GameLobbyData { get; set; }
 
-        public DbSet<ComsChannel> ComsData { get; set; }
+        public DbSet<Message> MessageData { get; set; }
+
+        public DbSet<PlayerProfile> PlayerProfileData { get; set; }
 
         public GameLobbyContext()
         {

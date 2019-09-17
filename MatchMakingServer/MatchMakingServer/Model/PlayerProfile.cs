@@ -5,17 +5,9 @@ using System.Threading.Tasks;
 
 namespace MatchMakingServer.Model
 {
-    //this represents a game connection node
-    public class GameLobby
+    public class PlayerProfile
     {
         public int Id { get; set; }
-
-        public int OwnerId { get; set; }
-        
-        public int PlayersInLobby { get; set; }
-
-        public int State { get; set; }
-
         public DateTime TimeOfLastActivity { get; set; }
     }
 }
