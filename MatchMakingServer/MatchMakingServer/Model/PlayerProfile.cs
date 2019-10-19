@@ -8,6 +8,6 @@ namespace MatchMakingServer.Model
     public class PlayerProfile
     {
         public int Id { get; set; }
-        public DateTime TimeOfLastActivity { get; set; }
+        public long TimeOfLastActivity { get; set; }
     }
 }

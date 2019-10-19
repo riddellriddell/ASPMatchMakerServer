@@ -17,7 +17,7 @@ namespace MatchMakingServer.Controllers
         public static async Task<Message> CreateMessage(GameLobbyContext glcContext, int iFrom, int iTo, string strValue)
         {
             Message msgMessage = new Message();
-            msgMessage.Time = DateTime.UtcNow;
+            msgMessage.Time = DateTime.UtcNow.Ticks;
             msgMessage.ToPlayerProfileId = iTo;
             msgMessage.FromPlayerProfileId = iFrom;
 
@@ -37,7 +37,7 @@ namespace MatchMakingServer.Controllers
         [HttpGet]
         public IEnumerable<Message> GetMessageData()
         {
-            _context.Database.EnsureCreated();
+            // _context.Database.EnsureCreated();
             return _context.MessageData;
         }
 
@@ -50,7 +50,7 @@ namespace MatchMakingServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Database.EnsureCreatedAsync();
+            // await _context.Database.EnsureCreatedAsync();
 
             var message = await _context.MessageData.FindAsync(id);
 
@@ -71,7 +71,7 @@ namespace MatchMakingServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Database.EnsureCreatedAsync();
+            // await _context.Database.EnsureCreatedAsync();
 
             //get message 
             List<Message> msgMessages = await _context.MessageData.Where(
@@ -83,6 +83,12 @@ namespace MatchMakingServer.Controllers
             //try and delete messages
             _context.MessageData.RemoveRange(msgMessages);
 
+            //check if any messages were found
+            if (msgMessages == null || msgMessages.Count == 0)
+            {
+                return NoContent();
+            }
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -92,12 +98,7 @@ namespace MatchMakingServer.Controllers
                 throw;
             }
 
-            List<MessageGet> msgMessageValues = msgMessages.Select(msgMessage => new MessageGet() { fromId = msgMessage.FromPlayerProfileId, message = msgMessage.Value }).ToList();
-
-            if (msgMessageValues == null || msgMessageValues.Count == 0)
-            {
-                return NoContent();
-            }
+            MessageGet msgMessageValues = new MessageGet() { messages = msgMessages };
 
             return Ok(msgMessageValues);
         }
@@ -111,14 +112,14 @@ namespace MatchMakingServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Database.EnsureCreatedAsync();
+            // await _context.Database.EnsureCreatedAsync();
 
             Message msgNewMessage = new Message()
             {
                 FromPlayerProfileId = message.fromId,
                 ToPlayerProfileId = message.toId,
                 Value = message.message,
-                Time = DateTime.UtcNow
+                Time = DateTime.UtcNow.Ticks
             };
 
             _context.MessageData.Add(msgNewMessage);

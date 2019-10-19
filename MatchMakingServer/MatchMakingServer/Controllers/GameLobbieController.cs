@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MatchMakingServer.Model;
+using MatchMakingServer.ReturnTypes;
 
 namespace MatchMakingServer.Controllers
 {
@@ -13,6 +14,7 @@ namespace MatchMakingServer.Controllers
     [ApiController]
     public class GameLobbieController : ControllerBase
     {
+
         private static async Task<GameLobby> GetCreateGameLobby(GameLobbyContext glcContext, PlayerProfile plpPlayerProfile)
         {
             //create new game lobby 
@@ -21,6 +23,15 @@ namespace MatchMakingServer.Controllers
                 GameLobby glbNewGameLobby = CreateNewGameLobby(plpPlayerProfile);
                 glbNewGameLobby.OwnerId = plpPlayerProfile.Id;
                 await glcContext.GameLobbyData.AddAsync(glbNewGameLobby);
+
+                try
+                {
+                    await glcContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
 
                 return glbNewGameLobby;
             }
@@ -33,7 +44,7 @@ namespace MatchMakingServer.Controllers
         {
             GameLobby glbNewLobby = new GameLobby();
 
-            glbNewLobby.TimeOfLastActivity = DateTime.UtcNow;
+            glbNewLobby.TimeOfLastActivity = DateTime.UtcNow.Ticks;
 
             return glbNewLobby;
         }
@@ -61,7 +72,7 @@ namespace MatchMakingServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Database.EnsureCreatedAsync();
+            // await _context.Database.EnsureCreatedAsync();
 
             var gameLobby = await _context.GameLobbyData.FindAsync(id);
 
@@ -82,7 +93,7 @@ namespace MatchMakingServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Database.EnsureCreatedAsync();
+            // await _context.Database.EnsureCreatedAsync();
 
             //try and get game lobby 
             GameLobby glbGameLobby = await _context.GameLobbyData.FindAsync(id);
@@ -95,7 +106,7 @@ namespace MatchMakingServer.Controllers
             //set player as owner of lobby
             glbGameLobby.PlayersInLobby = playerCount;
             glbGameLobby.State = state;
-            glbGameLobby.TimeOfLastActivity = DateTime.UtcNow;
+            glbGameLobby.TimeOfLastActivity = DateTime.UtcNow.Ticks;
 
             try
             {
@@ -118,7 +129,7 @@ namespace MatchMakingServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Database.EnsureCreatedAsync();
+            // await _context.Database.EnsureCreatedAsync();
 
             //try and get game lobby 
             GameLobby glbGameLobby = await _context.GameLobbyData.FindAsync(postRequest.Item1);
@@ -148,7 +159,7 @@ namespace MatchMakingServer.Controllers
                 throw;
             }
 
-            return CreatedAtAction("PostGameLobby", new Tuple<GameLobby, PlayerProfile>(glbGameLobby, plpProfile));
+            return CreatedAtAction("PostGameLobby", new CreateLobbyClass() { gameLobby = glbGameLobby, playerProfile = plpProfile });
         }
 
         // POST: api/GameLobbie
@@ -161,7 +172,7 @@ namespace MatchMakingServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _context.Database.EnsureCreatedAsync();
+            // await _context.Database.EnsureCreatedAsync();
 
             //get player profile
             PlayerProfile plpProfile = await PlayerProfilesController.GetCreatePlayerProfile(_context, id);
@@ -188,7 +199,7 @@ namespace MatchMakingServer.Controllers
                 throw;
             }
 
-            return CreatedAtAction("PostMatchMake", new { id }, new Tuple<GameLobby, PlayerProfile>(glbGameLobby, plpProfile));
+            return CreatedAtAction("PostMatchMake", new { id }, new CreateLobbyClass() { gameLobby = glbGameLobby, playerProfile = plpProfile });
         }
 
         // DELETE: api/GameLobbie/5

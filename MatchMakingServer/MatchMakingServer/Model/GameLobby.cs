@@ -16,6 +16,6 @@ namespace MatchMakingServer.Model
 
         public int State { get; set; }
 
-        public DateTime TimeOfLastActivity { get; set; }
+        public long TimeOfLastActivity { get; set; }
     }
 }

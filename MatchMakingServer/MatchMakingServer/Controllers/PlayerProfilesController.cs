@@ -32,6 +32,15 @@ namespace MatchMakingServer.Controllers
 
             await glcContext.PlayerProfileData.AddAsync(plpNewProfile);
 
+            try
+            {
+                await glcContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
             return plpNewProfile;
         }
 
