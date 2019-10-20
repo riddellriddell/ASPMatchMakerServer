@@ -14,6 +14,8 @@ namespace MatchMakingServer.Controllers
     [ApiController]
     public class MessagesController : ControllerBase
     {
+        public static float s_fMessageTimeOut = 5;
+
         public static async Task<Message> CreateMessage(GameLobbyContext glcContext, int iFrom, int iTo, string strValue)
         {
             Message msgMessage = new Message();
@@ -24,6 +26,16 @@ namespace MatchMakingServer.Controllers
             await glcContext.AddAsync(msgMessage);
 
             return msgMessage;
+        }
+
+        public static bool IsMessageValid(Message msgMessage)
+        {
+            if(DateTime.UtcNow.Ticks - msgMessage.Time > TimeSpan.FromSeconds(s_fMessageTimeOut).Ticks)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private readonly GameLobbyContext _context;
@@ -37,7 +49,6 @@ namespace MatchMakingServer.Controllers
         [HttpGet]
         public IEnumerable<Message> GetMessageData()
         {
-            // _context.Database.EnsureCreated();
             return _context.MessageData;
         }
 
@@ -49,8 +60,6 @@ namespace MatchMakingServer.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            // await _context.Database.EnsureCreatedAsync();
 
             var message = await _context.MessageData.FindAsync(id);
 
@@ -70,8 +79,6 @@ namespace MatchMakingServer.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            // await _context.Database.EnsureCreatedAsync();
 
             //get message 
             List<Message> msgMessages = await _context.MessageData.Where(
@@ -98,7 +105,8 @@ namespace MatchMakingServer.Controllers
                 throw;
             }
 
-            MessageGet msgMessageValues = new MessageGet() { messages = msgMessages };
+            //return all the valid messages 
+            MessageGet msgMessageValues = new MessageGet() { messages = msgMessages.Where(msgMessage => IsMessageValid(msgMessage)).ToList() };
 
             return Ok(msgMessageValues);
         }
@@ -111,8 +119,6 @@ namespace MatchMakingServer.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            // await _context.Database.EnsureCreatedAsync();
 
             Message msgNewMessage = new Message()
             {

@@ -15,6 +15,8 @@ namespace MatchMakingServer.Controllers
     public class GameLobbieController : ControllerBase
     {
 
+        public static float s_fLobbyTimeOutTime = 5;
+
         private static async Task<GameLobby> GetCreateGameLobby(GameLobbyContext glcContext, PlayerProfile plpPlayerProfile)
         {
             //create new game lobby 
@@ -36,8 +38,36 @@ namespace MatchMakingServer.Controllers
                 return glbNewGameLobby;
             }
 
-            //try and find an existing game lobby 
-            return await glcContext.GameLobbyData.FirstOrDefaultAsync();
+            //try and find an existing game lobby that is still active
+            return await glcContext.GameLobbyData.Where(glbGameLobby => IsLobbyStillActive(glbGameLobby)).FirstOrDefaultAsync();
+        }
+
+        //check if the controller of this lobby is still activly mainntaining the connection
+        private static bool IsLobbyStillActive( GameLobby glbLobby)
+        {
+            if(glbLobby == null)
+            {
+                return false;
+            }
+
+            long lTimeSinceLastActivity = DateTime.UtcNow.Ticks - glbLobby.TimeOfLastActivity;
+
+            if(lTimeSinceLastActivity > TimeSpan.FromSeconds(s_fLobbyTimeOutTime).Ticks)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task RemoveInactiveLobbies(GameLobbyContext glcContext)
+        {
+            //get list of game lobbies that need to be removed
+            GameLobby[] glbLobbiesToRemove = await glcContext.GameLobbyData.Where(glbGameLobby => !IsLobbyStillActive(glbGameLobby)).ToArrayAsync();
+
+            glcContext.GameLobbyData.RemoveRange(glbLobbiesToRemove);
+
+            await glcContext.SaveChangesAsync();
         }
 
         private static GameLobby CreateNewGameLobby(PlayerProfile plpPlayerProfile)

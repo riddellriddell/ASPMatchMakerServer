@@ -12532,23 +12532,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jack the ripper\\.nuget\\packages\\": {},
+    "C:\\Users\\Jack The Ripper\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Game Dev\\RollBackNetworking\\ASPMatchMakerServer\\MatchMakingServer\\MatchMakingServer\\MatchMakingServer.csproj",
+      "projectUniqueName": "C:\\Users\\Jack The Ripper\\Documents\\GameDev\\Rewind Networking\\ASPMatchMakingServer\\MatchMakingServer\\MatchMakingServer\\MatchMakingServer.csproj",
       "projectName": "MatchMakingServer",
-      "projectPath": "D:\\Game Dev\\RollBackNetworking\\ASPMatchMakerServer\\MatchMakingServer\\MatchMakingServer\\MatchMakingServer.csproj",
-      "packagesPath": "C:\\Users\\jack the ripper\\.nuget\\packages\\",
-      "outputPath": "D:\\Game Dev\\RollBackNetworking\\ASPMatchMakerServer\\MatchMakingServer\\MatchMakingServer\\obj\\",
+      "projectPath": "C:\\Users\\Jack The Ripper\\Documents\\GameDev\\Rewind Networking\\ASPMatchMakingServer\\MatchMakingServer\\MatchMakingServer\\MatchMakingServer.csproj",
+      "packagesPath": "C:\\Users\\Jack The Ripper\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Jack The Ripper\\Documents\\GameDev\\Rewind Networking\\ASPMatchMakingServer\\MatchMakingServer\\MatchMakingServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\jack the ripper\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jack The Ripper\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
